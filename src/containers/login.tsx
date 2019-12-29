@@ -1,7 +1,7 @@
 import React from "react";
 import { Auth } from "aws-amplify";
 import { useFormik } from "formik";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link as RouterLink } from "react-router-dom";
 import {
   Flex,
   Button,
@@ -11,8 +11,10 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input
+  Input,
+  Link
 } from "@chakra-ui/core";
+import { AppProps } from "../types";
 
 const validate = (values: { email: string; password: string }) => {
   const errors: { email?: string; password?: string } = {};
@@ -29,11 +31,7 @@ const validate = (values: { email: string; password: string }) => {
   return errors;
 };
 
-export function LoginForm(
-  props: {
-    userHasAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  } & RouteComponentProps
-) {
+export function LoginForm(props: AppProps & RouteComponentProps) {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -57,8 +55,16 @@ export function LoginForm(
 
   return (
     <Flex height="90vh" align="center" justify="center">
-      <Box>
-        <Heading>Login</Heading>
+      <Box width="500px" px="6">
+        <Heading pb="6">Login</Heading>
+        <FormHelperText>
+          Don't have an account?{" "}
+          {/* TypeScript does not like the `as` prop, ignore it with this weird syntax
+          // @ts-ignore */}
+          <Link color="teal.500" as={RouterLink} to="/signup">
+            Sign up here.
+          </Link>
+        </FormHelperText>
         <form onSubmit={formik.handleSubmit}>
           <FormControl isInvalid={Boolean(isEmailValid && isPasswordValid)}>
             <FormLabel htmlFor="email">Email Address</FormLabel>
@@ -66,6 +72,7 @@ export function LoginForm(
               id="email"
               name="email"
               type="email"
+              autoFocus
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
