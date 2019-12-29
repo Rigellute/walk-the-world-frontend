@@ -49,7 +49,6 @@ const validate = (
   if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "Please confirm your password is correct";
   }
-  console.log(errors);
   return errors;
 };
 
