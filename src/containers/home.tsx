@@ -18,8 +18,10 @@ import {
   StatLabel,
   StatNumber,
   Spinner,
+  Text,
   useToast
 } from "@chakra-ui/core";
+import { Link } from "../components/link";
 import { AppProps } from "../types";
 
 const validate = (values: { steps: number }) => {
@@ -132,7 +134,7 @@ async function getTotalSteps(
     setIsLoading(true);
     const response = await API.get("steps", "/steps", {});
     setSteps(response.steps);
-    setIsLoading(false);
+    setTimeout(() => setIsLoading(false), 1000);
   } catch (e) {
     setIsLoading(false);
     setError(e.message);
@@ -155,26 +157,46 @@ export function Home(props: AppProps) {
     getTotalSteps(setSteps, setIsLoading, setError);
   }, []);
   return (
-    <Flex mt="2rem" align="center" justify="center">
+    <Flex align="center" justify="center">
       <Box width="500px" px="6">
-        <Stat height="200px">
-          {isLoading ? (
-            <Spinner size="xl" />
-          ) : errorLoadingStepsMessage ? (
-            <AlertError message={errorLoadingStepsMessage} />
+        <Flex
+          height="full"
+          py="2rem"
+          justify="space-between"
+          direction="column"
+        >
+          <Box mb="2rem" height="100px">
+            <Stat>
+              {isLoading ? (
+                <Spinner size="xl" />
+              ) : errorLoadingStepsMessage ? (
+                <AlertError message={errorLoadingStepsMessage} />
+              ) : (
+                <>
+                  <StatLabel>Total steps</StatLabel>
+                  <StatNumber fontSize="2rem">
+                    {totalSteps.toLocaleString()}
+                  </StatNumber>
+                  <StatHelpText>
+                    As of {new Date().toLocaleString()}
+                  </StatHelpText>
+                </>
+              )}
+            </Stat>
+          </Box>
+          {props.isAuthenticated ? (
+            <AddSteps
+              appProps={props}
+              locallyUpdateSteps={locallyUpdateSteps}
+            />
           ) : (
-            <>
-              <StatLabel>Total steps</StatLabel>
-              <StatNumber fontSize="5rem">
-                {totalSteps.toLocaleString()}
-              </StatNumber>
-              <StatHelpText>As of {new Date().toLocaleString()}</StatHelpText>
-            </>
+            <Text as="p">
+              To add your steps you must have an account. If you already have an
+              account, you can <Link to="/login" message="login here" />. Or you
+              can <Link to="/signup" message="create an account here" />.
+            </Text>
           )}
-        </Stat>
-        {props.isAuthenticated ? (
-          <AddSteps appProps={props} locallyUpdateSteps={locallyUpdateSteps} />
-        ) : null}
+        </Flex>
       </Box>
     </Flex>
   );

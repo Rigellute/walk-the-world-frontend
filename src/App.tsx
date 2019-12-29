@@ -27,7 +27,7 @@ Amplify.configure({
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
+  const [, setIsAuthenticating] = useState(true);
 
   useEffect(() => {
     onLoad(userHasAuthenticated, setIsAuthenticating);

@@ -118,7 +118,10 @@ export function SignupForm(props: AppProps & RouteComponentProps) {
         <Heading pb="6">Sign up</Heading>
         <form onSubmit={formik.handleSubmit}>
           {isConfirmationStep ? (
-            <FormControl isInvalid={Boolean(isConfirmationCodeInvalid)}>
+            <FormControl
+              isInvalid={Boolean(isConfirmationCodeInvalid)}
+              isRequired
+            >
               <FormLabel htmlFor="confirmationCode">
                 Confirmation code
               </FormLabel>
@@ -132,7 +135,7 @@ export function SignupForm(props: AppProps & RouteComponentProps) {
                 value={formik.values.confirmationCode}
               />
               <FormHelperText id="confirmationCode-helper-text">
-                Check your email for the code
+                We've emailed you a confirmation code.
               </FormHelperText>
               <FormErrorMessage>
                 {formik.errors.confirmationCode}
@@ -140,7 +143,7 @@ export function SignupForm(props: AppProps & RouteComponentProps) {
             </FormControl>
           ) : (
             <>
-              <FormControl isInvalid={Boolean(isEmailInvalid)}>
+              <FormControl isInvalid={Boolean(isEmailInvalid)} isRequired>
                 <FormLabel htmlFor="email">Email Address</FormLabel>
                 <Input
                   id="email"
@@ -156,7 +159,7 @@ export function SignupForm(props: AppProps & RouteComponentProps) {
                 </FormHelperText>
                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={Boolean(isPasswordInvalid)}>
+              <FormControl isInvalid={Boolean(isPasswordInvalid)} isRequired>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
@@ -172,7 +175,10 @@ export function SignupForm(props: AppProps & RouteComponentProps) {
                 </FormHelperText>
                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={Boolean(isConfirmPasswordInvalid)}>
+              <FormControl
+                isInvalid={Boolean(isConfirmPasswordInvalid)}
+                isRequired
+              >
                 <FormLabel htmlFor="confirmPassword">
                   Confirm Password
                 </FormLabel>

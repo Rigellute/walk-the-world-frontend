@@ -17,12 +17,12 @@ export function Nav(props: { appProps: AppProps }) {
       right="0"
       borderBottomWidth="1px"
       width="full"
-      height="4rem"
+      height="5rem"
     >
       <Flex size="100%" px="6" align="center" justify="space-between">
         <Flex align="center" mr={5}>
           <Link to="/">
-            <Heading>UCL Walks</Heading>
+            <Heading>OVPA Walk the World</Heading>
           </Link>
         </Flex>
         <Flex
