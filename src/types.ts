@@ -5,4 +5,5 @@ export type UserHasAuthenticated = React.Dispatch<
 export type AppProps = {
   userHasAuthenticated: UserHasAuthenticated;
   isAuthenticated: boolean;
+  isAuthenticating: boolean;
 };

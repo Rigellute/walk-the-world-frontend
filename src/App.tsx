@@ -27,7 +27,7 @@ Amplify.configure({
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [, setIsAuthenticating] = useState(true);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   useEffect(() => {
     onLoad(userHasAuthenticated, setIsAuthenticating);
@@ -38,8 +38,20 @@ function App() {
       <ColorModeProvider value="dark">
         <CSSReset />
         <Router>
-          <Nav appProps={{ isAuthenticated, userHasAuthenticated }} />
-          <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+          <Nav
+            appProps={{
+              isAuthenticated,
+              userHasAuthenticated,
+              isAuthenticating
+            }}
+          />
+          <Routes
+            appProps={{
+              isAuthenticated,
+              userHasAuthenticated,
+              isAuthenticating
+            }}
+          />
         </Router>
       </ColorModeProvider>
     </ThemeProvider>

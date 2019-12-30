@@ -5,15 +5,9 @@ import { SignupForm } from "./signup";
 import { NotFound } from "./not-found";
 import { Home } from "./home";
 import { AppliedRoute } from "../components/applied-route";
+import { AppProps } from "../types";
 
-export function Routes({
-  appProps
-}: {
-  appProps: {
-    isAuthenticated: boolean;
-    userHasAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  };
-}) {
+export function Routes({ appProps }: { appProps: AppProps }) {
   return (
     <Switch>
       <AppliedRoute path="/" exact component={Home} appProps={appProps} />

@@ -126,14 +126,16 @@ function AddSteps({
 }
 
 async function getTotalSteps(
-  setSteps: React.Dispatch<React.SetStateAction<number>>,
+  setSteps: React.Dispatch<
+    React.SetStateAction<{ steps: number; calculated_at: number }>
+  >,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setError: React.Dispatch<React.SetStateAction<string>>
 ) {
   try {
     setIsLoading(true);
     const response = await API.get("steps", "/steps", {});
-    setSteps(response.steps);
+    setSteps({ steps: response.steps, calculated_at: response.calculated_at });
     setTimeout(() => setIsLoading(false), 1000);
   } catch (e) {
     setIsLoading(false);
@@ -142,15 +144,21 @@ async function getTotalSteps(
 }
 
 export function Home(props: AppProps) {
-  const [totalSteps, setSteps] = useState(0);
+  const [stepsData, setSteps] = useState({
+    steps: 0,
+    calculated_at: Date.now()
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [errorLoadingStepsMessage, setError] = useState("");
 
   const locallyUpdateSteps = useCallback(
     (nextSteps: number) => {
-      setSteps(totalSteps + nextSteps);
+      setSteps({
+        steps: stepsData.steps + nextSteps,
+        calculated_at: Date.now()
+      });
     },
-    [totalSteps]
+    [stepsData.steps]
   );
 
   useEffect(() => {
@@ -175,16 +183,16 @@ export function Home(props: AppProps) {
                 <>
                   <StatLabel>Total steps</StatLabel>
                   <StatNumber fontSize="2rem">
-                    {totalSteps.toLocaleString()}
+                    {stepsData.steps.toLocaleString()}
                   </StatNumber>
                   <StatHelpText>
-                    As of {new Date().toLocaleString()}
+                    As of {new Date(stepsData.calculated_at).toLocaleString()}
                   </StatHelpText>
                 </>
               )}
             </Stat>
           </Box>
-          {props.isAuthenticated ? (
+          {!props.isAuthenticating && props.isAuthenticated ? (
             <AddSteps
               appProps={props}
               locallyUpdateSteps={locallyUpdateSteps}
