@@ -1,0 +1,12 @@
+{
+  "build": {
+    "env": {
+      "REACT_APP_API_GATEWAY_REGION": "@walk_the_world_api_gateway_region",
+      "REACT_APP_API_GATEWAY_URL": "@walk_the_world_api_gateway_url",
+      "REACT_APP_COGNITO_REGION": "@walk_the_world_cognito_region",
+      "REACT_APP_COGNITO_USER_POOL_ID": "@walk_the_world_cognito_user_pool_id",
+      "REACT_APP_COGNITO_APP_CLIENT_ID": "@walk_the_world_cognito_app_client_id",
+      "REACT_APP_COGNITO_IDENTITY_POOL_ID": "@walk_the_world_cognito_identity_pool_id"
+    }
+  }
+}
