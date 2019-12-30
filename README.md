@@ -1,6 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Walk the World frontend
+
+This is a frontend for a trivial web application: the idea is for users to add their daily steps, which is aggregated towards the goal of walking around the world.
+
+This served as a nice first project for working with [Rust and serverless infrastructure](https://github.com/Rigellute/walk-the-world-backend).
+
+## Features
+
+- 🙏 Typescript
+- 🔓 Amplify for Auth and API usage 🚀
+- 🧨 Custom signup/login flow backed by Cognito using Formik and React Hooks
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
