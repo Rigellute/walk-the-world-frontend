@@ -11,6 +11,8 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
+  Grid,
+  Image,
   NumberInput,
   NumberInputField,
   Stat,
@@ -23,6 +25,7 @@ import {
 } from "@chakra-ui/core";
 import { Link } from "../components/link";
 import { AppProps } from "../types";
+import bearImage from "../bear.jpg";
 
 const validate = (values: { steps: number }) => {
   const errors: {
@@ -136,7 +139,7 @@ async function getTotalSteps(
     setIsLoading(true);
     const response = await API.get("steps", "/steps", {});
     setSteps({ steps: response.steps, calculated_at: response.calculated_at });
-    setTimeout(() => setIsLoading(false), 1000);
+    setIsLoading(false);
   } catch (e) {
     setIsLoading(false);
     setError(e.message);
@@ -166,45 +169,44 @@ export function Home(props: AppProps) {
   }, []);
   return (
     <Flex align="center" justify="center">
-      <Box width="500px" px="6">
-        <Flex
-          height="full"
-          py="2rem"
-          justify="space-between"
-          direction="column"
-        >
-          <Box mb="2rem" height="100px">
-            <Stat>
-              {isLoading ? (
-                <Spinner size="xl" />
-              ) : errorLoadingStepsMessage ? (
-                <AlertError message={errorLoadingStepsMessage} />
-              ) : (
-                <>
-                  <StatLabel>Total steps</StatLabel>
-                  <StatNumber fontSize="2rem">
-                    {stepsData.steps.toLocaleString()}
-                  </StatNumber>
-                  <StatHelpText>
-                    As of {new Date(stepsData.calculated_at).toLocaleString()}
-                  </StatHelpText>
-                </>
-              )}
-            </Stat>
+      <Box p="1rem" maxW="64rem" width="full">
+        <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap="2rem">
+          <Image src={bearImage} width="500px" rounded="0.3rem" />
+          <Box alignSelf="center">
+            <Box height="100px">
+              <Stat>
+                {isLoading ? (
+                  <Spinner size="xl" />
+                ) : errorLoadingStepsMessage ? (
+                  <AlertError message={errorLoadingStepsMessage} />
+                ) : (
+                  <>
+                    <StatLabel>Total steps</StatLabel>
+                    <StatNumber fontSize="2rem">
+                      {stepsData.steps.toLocaleString()}
+                    </StatNumber>
+                    <StatHelpText>
+                      As of {new Date(stepsData.calculated_at).toLocaleString()}
+                    </StatHelpText>
+                  </>
+                )}
+              </Stat>
+            </Box>
+            {!props.isAuthenticating && props.isAuthenticated ? (
+              <AddSteps
+                appProps={props}
+                locallyUpdateSteps={locallyUpdateSteps}
+              />
+            ) : (
+              <Text as="p">
+                To add your steps you must have an account. If you already have
+                an account, you can <Link to="/login" message="login here" />.
+                Or you can{" "}
+                <Link to="/signup" message="create an account here" />.
+              </Text>
+            )}
           </Box>
-          {!props.isAuthenticating && props.isAuthenticated ? (
-            <AddSteps
-              appProps={props}
-              locallyUpdateSteps={locallyUpdateSteps}
-            />
-          ) : (
-            <Text as="p">
-              To add your steps you must have an account. If you already have an
-              account, you can <Link to="/login" message="login here" />. Or you
-              can <Link to="/signup" message="create an account here" />.
-            </Text>
-          )}
-        </Flex>
+        </Grid>
       </Box>
     </Flex>
   );

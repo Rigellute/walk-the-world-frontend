@@ -35,7 +35,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <ColorModeProvider value="dark">
+      <ColorModeProvider value="light">
         <CSSReset />
         <Router>
           <Nav
