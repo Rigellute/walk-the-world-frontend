@@ -37,8 +37,6 @@ const validate = (values: { steps: number }) => {
     errors.steps = "Required";
   } else if (values.steps < 1) {
     errors.steps = "Steps must be a positive number";
-  } else if (values.steps > 30000) {
-    errors.steps = "Are you serious?! That's too many steps 😁";
   }
   return errors;
 };
