@@ -11,10 +11,12 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Grid,
+  Link as ExternalLink,
+  Icon,
   Image,
   NumberInput,
   NumberInputField,
+  SimpleGrid,
   Stat,
   StatHelpText,
   StatLabel,
@@ -167,10 +169,12 @@ export function Home(props: AppProps) {
   useEffect(() => {
     getTotalSteps(setSteps, setIsLoading, setError);
   }, []);
+
+  const gridGap = "2rem";
   return (
     <Flex align="center" justify="center">
       <Box p="1rem" maxW="64rem" width="full">
-        <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap="2rem">
+        <SimpleGrid columns={[1, 2]} spacing={gridGap}>
           <Image src={bearImage} width="500px" rounded="0.3rem" />
           <Box alignSelf="center">
             <Box height="100px">
@@ -206,7 +210,34 @@ export function Home(props: AppProps) {
               </Text>
             )}
           </Box>
-        </Grid>
+        </SimpleGrid>
+        <SimpleGrid mt="1rem" columns={[1, 2]} spacing={gridGap}>
+          <Text as="p">
+            Walk the World is an innovative project that aims to educate us all
+            on the cause and effect of climate change around the world through
+            the medium of our roving representative – Jeremy Beartham. Jeremy
+            will be reporting back from different areas of the globe on what he
+            has seen and learnt about the problems caused by climate change and
+            the innovative solutions and practical actions that are taking
+            place.
+          </Text>
+          <Text as="p">
+            It is hoped that this initiative will encourage us all to increase
+            our physical wellbeing through exercise, to forego public transport
+            and walk where we can instead, and to consider our own personal
+            impact on the world and to rethink actions that might
+            collaboratively contribute to climate change.
+          </Text>
+        </SimpleGrid>
+        <Text as="p">
+          <ExternalLink
+            href="https://www.instagram.com/jeremybeartham/"
+            isExternal
+            color="teal.500"
+          >
+            Instagram <Icon name="external-link" mx="2px" />
+          </ExternalLink>
+        </Text>
       </Box>
     </Flex>
   );
