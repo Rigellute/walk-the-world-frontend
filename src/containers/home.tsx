@@ -11,8 +11,13 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
+  Heading,
   Link as ExternalLink,
+  List,
+  ListItem,
+  ListIcon,
   Icon,
+  IconProps,
   Image,
   NumberInput,
   NumberInputField,
@@ -28,6 +33,19 @@ import {
 import { Link } from "../components/link";
 import { AppProps } from "../types";
 import bearImage from "../bear.jpg";
+
+const countryProgress = [
+  { name: "Europe", isComplete: false, isCurrent: true },
+  { name: "Africa", isComplete: false, isCurrent: false },
+  { name: "Asia", isComplete: false, isCurrent: false },
+  { name: "Australia", isComplete: false, isCurrent: false },
+  { name: "Antarctica", isComplete: false, isCurrent: false },
+  { name: "South America", isComplete: false, isCurrent: false },
+  { name: "North", isComplete: false, isCurrent: false },
+  { name: "America", isComplete: false, isCurrent: false },
+  { name: "Russia", isComplete: false, isCurrent: false },
+  { name: "Asia", isComplete: false, isCurrent: false }
+];
 
 const validate = (values: { steps: number }) => {
   const errors: {
@@ -225,18 +243,57 @@ export function Home(props: AppProps) {
             and walk where we can instead, and to consider our own personal
             impact on the world and to rethink actions that might
             collaboratively contribute to climate change.
+            <ExternalLink
+              href="https://www.instagram.com/jeremybeartham/"
+              isExternal
+              color="teal.500"
+            >
+              {" "}
+              Instagram <Icon name="external-link" mx="2px" />
+            </ExternalLink>
           </Text>
         </SimpleGrid>
-        <Text as="p">
-          <ExternalLink
-            href="https://www.instagram.com/jeremybeartham/"
-            isExternal
-            color="teal.500"
-          >
-            Instagram <Icon name="external-link" mx="2px" />
-          </ExternalLink>
-        </Text>
+        <Heading my="1rem" as="h3">
+          {" "}
+          Progress
+        </Heading>
+        <List spacing={3}>
+          {countryProgress.map(country => {
+            const { icon, color } = getCountryProgressIconProps(country);
+            return (
+              <ListItem>
+                <ListIcon icon={icon} color={color} />
+                {country.name}
+              </ListItem>
+            );
+          })}
+        </List>
       </Box>
     </Flex>
   );
+}
+
+function getCountryProgressIconProps(country: {
+  name: string;
+  isCurrent: boolean;
+  isComplete: boolean;
+}): { icon: IconProps["name"]; color: string } {
+  if (country.isComplete) {
+    return {
+      icon: "check",
+      color: "green.500"
+    };
+  }
+
+  if (country.isCurrent) {
+    return {
+      icon: "arrow-forward",
+      color: "teal.500"
+    };
+  }
+
+  return {
+    icon: "chevron-right",
+    color: "gray.500"
+  };
 }
