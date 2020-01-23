@@ -227,6 +227,9 @@ export function Home(props: AppProps) {
             )}
           </Box>
         </SimpleGrid>
+        <Heading my="1rem" as="h3">
+          About
+        </Heading>
         <SimpleGrid mt="1rem" columns={[1, 2]} spacing={gridGap}>
           <Text as="p">
             Walk the World is an innovative project that aims to educate us all

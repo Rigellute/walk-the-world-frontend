@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useFormik } from "formik";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import {
   Alert,
   AlertIcon,
@@ -13,6 +13,7 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
+  Text,
   Input,
   useToast
 } from "@chakra-ui/core";
@@ -61,7 +62,27 @@ function AuthError({ message }: { message: string }) {
   );
 }
 
-export function SignupForm(props: AppProps & RouteComponentProps) {
+// For this project, a real signup flow is no longer needed. We will just create accounts using the aws cli
+export function SignupForm() {
+  return (
+    <Flex height="90vh" align="center" justify="center">
+      <Box mx="1rem">
+        <Heading as="h2">
+          You cannot signup anymore, and admin needs to create an account for
+          you.
+        </Heading>
+        <Link to="/">
+          <Text as="p" color="teal.500">
+            Return home
+          </Text>
+        </Link>
+      </Box>
+    </Flex>
+  );
+}
+
+// Leave the code for real signup for future reference
+export function SignupFormReal(props: AppProps & RouteComponentProps) {
   const [isConfirmationStep, setIsConfirmationStep] = useState(false);
   const [authErrorMessage, setAuthError] = useState("");
   const toast = useToast();
