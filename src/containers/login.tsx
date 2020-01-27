@@ -15,23 +15,25 @@ import {
 } from "@chakra-ui/core";
 import { AppProps } from "../types";
 import { Link } from "../components/link";
+import { AlertError } from "../components/alert-error";
 
 const validate = (values: { email: string; password: string }) => {
   const errors: { email?: string; password?: string } = {};
   if (!values.email) {
     errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
   }
+
   if (!values.password) {
     errors.password = "Required";
   } else if (values.password.length < 8) {
     errors.password = "Password must be 8 characters or more";
   }
+
   return errors;
 };
 
 export function LoginForm(props: AppProps & RouteComponentProps) {
+  const [errorMessage, setError] = React.useState("");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -45,7 +47,7 @@ export function LoginForm(props: AppProps & RouteComponentProps) {
         props.userHasAuthenticated(true);
         props.history.push("/");
       } catch (e) {
-        alert(e.message);
+        setError(e.message);
       }
     }
   });
@@ -85,9 +87,8 @@ export function LoginForm(props: AppProps & RouteComponentProps) {
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
-            {isPasswordValid ? (
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            ) : null}
+            <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+            {errorMessage ? <AlertError message={errorMessage} /> : null}
             <Button
               mt={4}
               variantColor="teal"

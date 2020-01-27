@@ -3,8 +3,6 @@ import { Auth } from "aws-amplify";
 import { useFormik } from "formik";
 import { RouteComponentProps, Link } from "react-router-dom";
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Flex,
@@ -17,6 +15,7 @@ import {
   Input,
   useToast
 } from "@chakra-ui/core";
+import { AlertError } from "../components/alert-error";
 import { AppProps } from "../types";
 
 const validate = (
@@ -52,15 +51,6 @@ const validate = (
   }
   return errors;
 };
-
-function AuthError({ message }: { message: string }) {
-  return (
-    <Alert mt="1rem" status="error">
-      <AlertIcon />
-      {message}
-    </Alert>
-  );
-}
 
 // For this project, a real signup flow is no longer needed. We will just create accounts using the aws cli
 export function SignupForm() {
@@ -217,7 +207,7 @@ export function SignupFormReal(props: AppProps & RouteComponentProps) {
               </FormControl>
             </>
           )}
-          {authErrorMessage ? <AuthError message={authErrorMessage} /> : null}
+          {authErrorMessage ? <AlertError message={authErrorMessage} /> : null}
           <Button
             mt={4}
             variantColor="teal"

@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { API } from "aws-amplify";
 import { useFormik } from "formik";
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Flex,
@@ -33,6 +31,7 @@ import {
 import { Link } from "../components/link";
 import { AppProps } from "../types";
 import bearImage from "../bear.jpg";
+import { AlertError } from "../components/alert-error";
 
 const countryProgress = [
   { name: "Europe", isComplete: false, isCurrent: true },
@@ -41,10 +40,8 @@ const countryProgress = [
   { name: "Australia", isComplete: false, isCurrent: false },
   { name: "Antarctica", isComplete: false, isCurrent: false },
   { name: "South America", isComplete: false, isCurrent: false },
-  { name: "North", isComplete: false, isCurrent: false },
-  { name: "America", isComplete: false, isCurrent: false },
-  { name: "Russia", isComplete: false, isCurrent: false },
-  { name: "Asia", isComplete: false, isCurrent: false }
+  { name: "North America", isComplete: false, isCurrent: false },
+  { name: "Russia", isComplete: false, isCurrent: false }
 ];
 
 const validate = (values: { steps: number }) => {
@@ -58,15 +55,6 @@ const validate = (values: { steps: number }) => {
   }
   return errors;
 };
-
-function AlertError({ message }: { message: string }) {
-  return (
-    <Alert mt="1rem" status="error">
-      <AlertIcon />
-      {message}
-    </Alert>
-  );
-}
 
 function AddSteps({
   appProps,
@@ -264,7 +252,7 @@ export function Home(props: AppProps) {
           {countryProgress.map(country => {
             const { icon, color } = getCountryProgressIconProps(country);
             return (
-              <ListItem>
+              <ListItem key={country.name}>
                 <ListIcon icon={icon} color={color} />
                 {country.name}
               </ListItem>
