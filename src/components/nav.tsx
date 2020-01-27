@@ -22,7 +22,7 @@ export function Nav(props: { appProps: AppProps }) {
       <Flex size="100%" px="1rem" align="center" justify="space-between">
         <Flex align="center" mr={5}>
           <Link to="/">
-            <Heading>OVPA Walk the World</Heading>
+            <Heading color="teal.500">OVPA</Heading>
           </Link>
         </Flex>
         <Flex

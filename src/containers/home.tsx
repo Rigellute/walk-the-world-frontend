@@ -7,7 +7,6 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Heading,
   Link as ExternalLink,
@@ -70,7 +69,7 @@ function AddSteps({
       steps: 0
     },
     validate,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         await API.post("steps", "/steps", {
           body: {
@@ -80,22 +79,17 @@ function AddSteps({
         setSubmitting(false);
 
         setError("");
+        resetForm();
         toast({
           title: "Success!",
-          description: "Your steps are added, see you tomorrow!",
+          description: "Your steps are added! 🎉",
           status: "success",
           duration: 9000,
           isClosable: true
         });
         locallyUpdateSteps(values.steps);
       } catch (e) {
-        // Massive hack: I've hardcoded a 400 response to mean that you've already done your steps for the day.
-        // It would be better for this message to come from API Gateway, but that's a faff
-        if (e.message.includes("400")) {
-          setError("You have already submitted your steps today.");
-        } else {
-          setError(e.message);
-        }
+        setError(e.message);
       }
     }
   });
@@ -105,7 +99,7 @@ function AddSteps({
     <form onSubmit={formik.handleSubmit}>
       <FormControl isInvalid={areStepsInvalid}>
         <FormLabel htmlFor="steps">Enter your steps</FormLabel>
-        <NumberInput min={0} max={30000}>
+        <NumberInput min={0}>
           <NumberInputField
             id="steps"
             name="steps"
@@ -116,9 +110,6 @@ function AddSteps({
             value={formik.values.steps}
           />
         </NumberInput>
-        <FormHelperText id="steps-helper-text">
-          You can only enter your steps once a day.
-        </FormHelperText>
         <FormErrorMessage>{formik.errors.steps}</FormErrorMessage>
         {errorMessage ? <AlertError message={errorMessage} /> : null}
       </FormControl>
@@ -178,6 +169,9 @@ export function Home(props: AppProps) {
   return (
     <Flex align="center" justify="center">
       <Box p="1rem" maxW="64rem" width="full">
+        <Heading size="xl" mb="1rem" as="h1">
+          Walk the World
+        </Heading>
         <SimpleGrid columns={[1, 2]} spacing={gridGap}>
           <Image src={bearImage} width="500px" rounded="0.3rem" />
           <Box alignSelf="center">
@@ -215,7 +209,7 @@ export function Home(props: AppProps) {
             )}
           </Box>
         </SimpleGrid>
-        <Heading my="1rem" as="h3">
+        <Heading my="1rem" size="lg" as="h2">
           About
         </Heading>
         <SimpleGrid mt="1rem" columns={[1, 2]} spacing={gridGap}>
@@ -244,7 +238,7 @@ export function Home(props: AppProps) {
             </ExternalLink>
           </Text>
         </SimpleGrid>
-        <Heading my="1rem" as="h3">
+        <Heading size="lg" my="1rem" as="h2">
           {" "}
           Progress
         </Heading>
