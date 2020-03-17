@@ -33,8 +33,8 @@ import bearImage from "../bear.jpg";
 import { AlertError } from "../components/alert-error";
 
 const countryProgress = [
-  { name: "Europe", isComplete: false, isCurrent: true },
-  { name: "Africa", isComplete: false, isCurrent: false },
+  { name: "Europe", isComplete: true, isCurrent: true },
+  { name: "Africa", isComplete: false, isCurrent: true },
   { name: "Asia", isComplete: false, isCurrent: false },
   { name: "Australia", isComplete: false, isCurrent: false },
   { name: "Antarctica", isComplete: false, isCurrent: false },
